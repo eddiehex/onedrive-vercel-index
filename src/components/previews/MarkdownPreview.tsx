@@ -122,6 +122,7 @@ const MarkdownPreview: FC<{
             // ignoring it shoudld be safe enough.
             // @ts-ignore
             rehypePlugins={[rehypeKatex, rehypeRaw]}
+            // @ts-ignore - react-markdown v9 has stricter component types
             components={customRenderer}
           >
             {content}
