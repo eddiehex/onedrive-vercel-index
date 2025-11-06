@@ -3,10 +3,10 @@ import type { OdFileObject } from '../../types'
 import { FC, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
+import dynamic from 'next/dynamic'
 
 import axios from 'axios'
 import toast from 'react-hot-toast'
-import Plyr from 'plyr-react'
 import { useAsync } from 'react-async-hook'
 import { useClipboard } from 'use-clipboard-copy'
 
@@ -21,6 +21,12 @@ import Loading from '../Loading'
 import CustomEmbedLinkMenu from '../CustomEmbedLinkMenu'
 
 import 'plyr-react/plyr.css'
+
+// Import types only (no runtime code)
+import type Plyr from 'plyr-react'
+
+// Dynamically import Plyr component to avoid SSR issues
+const PlyrComponent = dynamic(() => import('plyr-react'), { ssr: false })
 
 const VideoPlayer: FC<{
   videoName: string
@@ -71,7 +77,7 @@ const VideoPlayer: FC<{
     // If the video is not in flv format, we can use the native plyr and add sources directly with the video URL
     plyrSource['sources'] = [{ src: videoUrl }]
   }
-  return <Plyr id="plyr" source={plyrSource as Plyr.SourceInfo} options={plyrOptions} />
+  return <PlyrComponent id="plyr" source={plyrSource as Plyr.SourceInfo} options={plyrOptions} />
 }
 
 const VideoPreview: FC<{ file: OdFileObject }> = ({ file }) => {
