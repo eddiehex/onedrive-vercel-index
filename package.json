@@ -93,5 +93,6 @@
       "next/core-web-vitals",
       "prettier"
     ]
-  }
+  },
+  "packageManager": "pnpm@8.15.9"
 }
